@@ -22,7 +22,8 @@ This is a long-term open-source-style fork: own branding first, then ham-oriente
 \\wsl.localhost\Ubuntu-24.04\home\macmuz\Projects\AetherX6100Buildroot
 ```
 
-This folder (`C:\Projects\Mac6100`) is the **project hub**: docs, assets, image version counter.
+This folder (`C:\Projects\Mac6100`) is the **project hub**: docs, assets, image version counter.  
+GitHub: https://github.com/HE3r0/MAC6100
 
 ## Documentation
 

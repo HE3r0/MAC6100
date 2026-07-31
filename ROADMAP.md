@@ -12,7 +12,7 @@ Ordered roughly by risk / value. Prefer finishing docs + build automation before
 - [x] Project documentation hub
 - [x] `build.sh` (GUI dirclean/rebuild/make + versioned `sdcardN.img` copy)
 - [x] Document local vs git `SITE` (`x6100_gui.mk.local.example`)
-- [ ] Publish / maintain hub repo on GitHub (`HE3r0/Mac6100`)
+- [x] Publish / maintain hub repo on GitHub (`HE3r0/MAC6100`)
 - [ ] Keep Windows vs WSL tree confusion documented / avoided
 
 ## Features (ham / portable)

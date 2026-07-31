@@ -16,7 +16,7 @@ Snapshot for AI/session handoff. Update when behavior or process changes.
 
 - `x6100_gui.mk` still embeds a machine-local absolute path (documented via `x6100_gui.mk.local.example`)
 - Windows `C:\Projects\x6100_gui` can diverge from WSL — treat WSL as truth
-- Hub GitHub repo (`HE3r0/Mac6100`) — create remote if missing, then push this folder
+- Hub GitHub repo published: https://github.com/HE3r0/MAC6100
 
 ## Counter
 
