@@ -1,0 +1,17 @@
+################################################################################
+#
+# Same example kept in the MAC6100 hub for discoverability.
+# Canonical copy also lives next to the real package file:
+#   AetherX6100Buildroot/br2_external/package/x6100-gui/x6100_gui.mk.local.example
+#
+################################################################################
+
+# Local MAC6100 development (WSL):
+# X6100_GUI_SITE = /home/macmuz/Projects/x6100_gui
+# X6100_GUI_SITE_METHOD = local
+# # X6100_GUI_GIT_SUBMODULES = YES
+
+# Upstream default:
+# X6100_GUI_SITE = https://github.com/gdyuldin/x6100_gui
+# X6100_GUI_SITE_METHOD = git
+# X6100_GUI_GIT_SUBMODULES = YES

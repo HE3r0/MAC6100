@@ -1,0 +1,11 @@
+# MAC6100 hub — local ignores
+
+# Editor / OS junk
+Thumbs.db
+Desktop.ini
+.DS_Store
+*.swp
+*~
+
+# Local-only notes (keep examples tracked)
+*.local.md
