@@ -97,6 +97,12 @@ strings ~/Projects/AetherX6100Buildroot/build/target/usr/sbin/x6100_gui | grep �
 - Documentation and durable process over copy-paste from chat
 - Propose docs/scripts when they reduce rebuild mistakes
 
+## Bluetooth NMEA (SPP / RFCOMM)
+
+Pełna procedura + kernel + pułapki: [../ttd/bluetooth-rfcomm-nmea.md](../ttd/bluetooth-rfcomm-nmea.md)
+
+Skrót: aplikacja **GPS NMEA Tether**, kanał z SDP **„GPS NMEA Tether”** (u nas **8**), `rfcomm connect /dev/rfcomm0 <MAC> 8`.
+
 ## Suggested next features (when asked)
 
 See `ROADMAP.md`: Mactenna, calculators, portable UX, then `build.sh` automation.

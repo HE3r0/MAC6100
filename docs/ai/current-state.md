@@ -4,6 +4,9 @@ Snapshot for AI/session handoff. Update when behavior or process changes.
 
 ## Working
 
+- **Bluetooth RFCOMM NMEA** z telefonu (GPS NMEA Tether, kanał 8 → `/dev/rfcomm0`) — patrz [../ttd/bluetooth-rfcomm-nmea.md](../ttd/bluetooth-rfcomm-nmea.md)
+- Kernel: `CONFIG_BT=y`, `CONFIG_BT_RFCOMM_TTY=y`, `/proc/config.gz` (IKCONFIG)
+- BlueZ alias **XIEGUX6100** (`rootfs-overlay/etc/bluetooth/main.conf`)
 - Radio boots MAC6100 image from Buildroot `build/images/sdcard.img`
 - Local GUI package wiring confirmed
 - About: MAC6100 / SO0BAD / R1CBU credit / GUI+BASE versions / `(c)`
