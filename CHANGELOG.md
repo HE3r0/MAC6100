@@ -6,6 +6,18 @@ All notable MAC6100-specific changes. Upstream history remains in the respective
 
 - (none)
 
+## 2026-08-23
+
+### Baseline
+
+- Established **`mac6100-baseline-1`** on `AetherX6100Buildroot` (`bootlogo`, `1c5af10`)
+- Kernel: `CONFIG_BT=y`, `CONFIG_BT_RFCOMM=y`, `CONFIG_BT_RFCOMM_TTY=y`, IKCONFIG
+- BlueZ alias `XIEGUX6100`; updated splash `logo.png`
+- GUI SITE → `~/Projects/test/x6100` (v0.34.2, **no** BT APP button)
+- Reference flash: `C:\Projects\sdcard25.img`
+- Docs: `docs/ai/baseline.md` — **all new work starts from this baseline**
+- `HE3r0/x6100_gui` / `~/Projects/x6100_gui` marked **obsolete** for new features (archive of BT GUI experiments)
+
 ## 2026-07-31
 
 ### Project hub / docs

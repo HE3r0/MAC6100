@@ -11,10 +11,16 @@ One page for assistants. Prefer this over guessing.
 - **Upstream GUI credit:** R1CBU / gdyuldin X6100 GUI
 - **Owner GitHub:** HE3r0
 
+## Baseline (mandatory)
+
+See [baseline.md](baseline.md). Tag **`mac6100-baseline-1`** (`1c5af10`).  
+Active GUI = `~/Projects/test/x6100` (no BT APP button).  
+`~/Projects/x6100_gui` is **obsolete** for new work.
+
 ## Canonical paths (WSL)
 
 ```text
-/home/macmuz/Projects/x6100_gui
+/home/macmuz/Projects/test/x6100
 /home/macmuz/Projects/AetherX6100Buildroot
 /home/macmuz/Projects/AetherX6100Buildroot/build/images/sdcard.img
 ```
@@ -51,7 +57,7 @@ make
 Verify build tree matches sources before flash:
 
 ```bash
-grep … ~/Projects/x6100_gui/src/…
+grep … ~/Projects/test/x6100/src/…
 grep … ~/Projects/AetherX6100Buildroot/build/build/x6100-gui-*/src/…
 strings ~/Projects/AetherX6100Buildroot/build/target/usr/sbin/x6100_gui | grep …
 ```
@@ -61,7 +67,8 @@ strings ~/Projects/AetherX6100Buildroot/build/target/usr/sbin/x6100_gui | grep �
 `AetherX6100Buildroot/br2_external/package/x6100-gui/x6100_gui.mk`
 
 - `X6100_GUI_SITE_METHOD = local`
-- `X6100_GUI_SITE = /home/macmuz/Projects/x6100_gui`
+- `X6100_GUI_SITE = /home/macmuz/Projects/test/x6100`
+- Buildroot checkout: tag `mac6100-baseline-1` (or branch `bootlogo` at/after that tag)
 
 ## Versioned SD images on Windows
 
@@ -73,9 +80,9 @@ strings ~/Projects/AetherX6100Buildroot/build/target/usr/sbin/x6100_gui | grep �
 
 | Intent | File |
 |---|---|
-| About UI | `x6100_gui/src/dialog_settings.cpp` (`make_info_page`) |
-| Button labels | `x6100_gui/src/buttons.cpp` |
-| Main UI init | `x6100_gui/src/main_screen.c` |
+| About UI | `test/x6100/src/dialog_settings.cpp` |
+| Button labels | `test/x6100/src/buttons.cpp` |
+| Main UI init | `test/x6100/src/main_screen.c` |
 | Boot logo | `AetherX6100Buildroot/br2_external/board/X6100/linux/logo.png` |
 
 ## Display
@@ -99,9 +106,9 @@ strings ~/Projects/AetherX6100Buildroot/build/target/usr/sbin/x6100_gui | grep �
 
 ## Bluetooth NMEA (SPP / RFCOMM)
 
-Pełna procedura + kernel + pułapki: [../ttd/bluetooth-rfcomm-nmea.md](../ttd/bluetooth-rfcomm-nmea.md)
+Full procedure + kernel + pitfalls: [../ttd/bluetooth-rfcomm-nmea.md](../ttd/bluetooth-rfcomm-nmea.md)
 
-Skrót: aplikacja **GPS NMEA Tether**, kanał z SDP **„GPS NMEA Tether”** (u nas **8**), `rfcomm connect /dev/rfcomm0 <MAC> 8`.
+Short: app **GPS NMEA Tether**, SDP channel **"GPS NMEA Tether"** (ours **8**), `rfcomm connect /dev/rfcomm0 <MAC> 8`.
 
 ## Suggested next features (when asked)
 

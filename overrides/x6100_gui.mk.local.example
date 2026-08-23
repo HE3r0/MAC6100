@@ -6,10 +6,13 @@
 #
 ################################################################################
 
-# Local MAC6100 development (WSL):
-# X6100_GUI_SITE = /home/macmuz/Projects/x6100_gui
+# MAC6100 baseline GUI (from mac6100-baseline-1):
+# X6100_GUI_SITE = /home/macmuz/Projects/test/x6100
 # X6100_GUI_SITE_METHOD = local
 # # X6100_GUI_GIT_SUBMODULES = YES
+
+# OBSOLETE — do not use for new work:
+# X6100_GUI_SITE = /home/macmuz/Projects/x6100_gui
 
 # Upstream default:
 # X6100_GUI_SITE = https://github.com/gdyuldin/x6100_gui
