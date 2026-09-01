@@ -19,33 +19,32 @@ Every new modification branches from this baseline. See [`docs/ai/baseline.md`](
 
 ## Golden rules
 
-1. Work in **WSL** trees under `/home/macmuz/Projects/…`
+1. Build on **Linux** (Ubuntu 24.04 VM or WSL) under `~/Projects/…` — not native macOS
 2. Image path is **`AetherX6100Buildroot/build/images/sdcard.img`** — not `buildroot/output`
 3. After GUI edits: `make x6100-gui-dirclean && make x6100-gui-rebuild && make` inside `…/build`
 4. **One step → verify → next.** Do not guess make targets or paths
 5. If unsure, say so and inspect the tree / ask the user
 6. Preserve upstream credit (R1CBU) on About
-7. After successful rebuild, copy image to `C:\Projects\sdcardN.img` using `next_sdcard_version.txt`, then increment the counter — or run `/mnt/c/Projects/Mac6100/build.sh`
-8. Prefer `build.sh` over ad-hoc `make` sequences when producing a flashable image
-9. **Do not** treat `~/Projects/x6100_gui` as the active GUI — it is **obsolete** (WiFi/BT experiments archive)
+7. After successful rebuild, copy image via `build-local.sh` / `build.sh` (`MAC6100_WIN_PROJECTS` → e.g. `~/Projects/images`)
+8. Prefer `build-local.sh` / `build.sh` over ad-hoc `make` sequences when producing a flashable image
+9. **Do not** treat `~/Projects/x6100_gui` as the active GUI — it is **obsolete**
 
 ## Repos
 
 | Path | Remote | Role |
 |---|---|---|
-| `/home/macmuz/Projects/test/x6100` | `git@github.com:HE3r0/x6100_test.git` | **Active GUI** (baseline) |
-| `/home/macmuz/Projects/AetherX6100Buildroot` | `git@github.com:HE3r0/AetherX6100Buildroot.git` | Buildroot @ `mac6100-baseline-1` |
-| `/home/macmuz/Projects/x6100_gui` | `git@github.com:HE3r0/x6100_gui.git` | **OBSOLETE** archive |
-
-Hub / docs: `C:\Projects\Mac6100` (also `/mnt/c/Projects/Mac6100` from WSL)
+| `~/Projects/x6100_test` | `HE3r0/x6100_test` | **Active GUI** (baseline `main`) |
+| `~/Projects/AetherX6100Buildroot` | `HE3r0/AetherX6100Buildroot` | Buildroot @ `mac6100-baseline-1` / `bootlogo` |
+| `~/Projects/x6100_gui` | `HE3r0/x6100_gui` | **OBSOLETE** archive |
+| `~/Projects/MAC6100` | `HE3r0/MAC6100` | Hub / docs / scripts |
 
 ## Do not
 
-- Edit `C:\Projects\x6100_gui` or `~/Projects/x6100_gui` for new features (obsolete)
-- Edit Windows copies assuming they feed the radio build
-- Commit machine-local secrets
+- Edit obsolete `x6100_gui` trees for new features
+- Assume Windows-only paths (`C:\…`, `/mnt/c/…`) on a Mac setup
+- Commit machine-local secrets (`mac6100.local.env`)
 - Force-push or rewrite history unless the user asks
-- Add `Co-authored-by: Cursor` if the user rejected it — commit from WSL/Python if the IDE injects a breaking trailer
+- Add `Co-authored-by: Cursor` if the user rejected it — commit from bash/Python if the IDE injects a breaking trailer
 
 ## After behavior changes
 

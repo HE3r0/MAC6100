@@ -1,69 +1,95 @@
 # Building MAC6100 firmware
 
-## Quick build (recommended)
+## macOS + Linux build host (current)
 
-From WSL:
+Firmware **does not build natively on macOS**. Use:
+
+1. **Mac host** — Cursor, git, edit `x6100_test` / docs, flash with balenaEtcher  
+2. **Ubuntu 24.04 VM** (UTM / Parallels) — Buildroot `make` → `sdcard.img`
+
+### One-time on the Mac
 
 ```bash
-chmod +x /mnt/c/Projects/Mac6100/build.sh   # once
-/mnt/c/Projects/Mac6100/build.sh
+cd ~/Projects/MAC6100
+chmod +x setup-macos.sh setup-buildhost.sh build.sh
+./setup-macos.sh
 ```
 
-This runs `x6100-gui-dirclean` → `x6100-gui-rebuild` → `make`, then copies
-`sdcard.img` to `C:\Projects\sdcardN.img` and bumps `next_sdcard_version.txt`.
+Ensure these clones exist (names matter for the scripts):
 
-Optional env overrides: `MAC6100_BUILDROOT`, `MAC6100_HUB`, `MAC6100_WIN_PROJECTS`.
+| Path | Repo | Branch / tag |
+|------|------|----------------|
+| `~/Projects/MAC6100` | `HE3r0/MAC6100` | `main` |
+| `~/Projects/x6100_test` | `HE3r0/x6100_test` | `main` (baseline GUI) |
+| `~/Projects/AetherX6100Buildroot` | `HE3r0/AetherX6100Buildroot` | `bootlogo` / tag `mac6100-baseline-1` |
 
-## Environment
+### One-time inside Ubuntu 24.04
 
-- **Build host:** WSL2 Ubuntu-24.04 (user `macmuz`)
-- **Do not assume** a stock Buildroot layout under `buildroot/output`
-- Firmware output directory:
+Clone or share the same three repos under `~/Projects/…`, then:
 
-```text
-~/Projects/AetherX6100Buildroot/build
+```bash
+cd ~/Projects/MAC6100
+./setup-buildhost.sh
+# optional exact baseline:
+# MAC6100_RESET_TO_BASELINE=1 ./setup-buildhost.sh
 ```
 
-Final image:
+First Buildroot (only if `AetherX6100Buildroot/build` is missing):
 
-```text
-~/Projects/AetherX6100Buildroot/build/images/sdcard.img
+```bash
+cd ~/Projects/AetherX6100Buildroot
+git submodule update --init --recursive
+./br_config.sh
+cd build && make          # long cold build
 ```
 
-## Source layout
+### Day-to-day rebuild
 
-| Path (WSL) | Role |
-|---|---|
-| `~/Projects/x6100_gui` | GUI sources (edited here) |
-| `~/Projects/AetherX6100Buildroot` | Buildroot tree + board packages |
+```bash
+# inside Ubuntu
+~/Projects/MAC6100/build-local.sh
+```
 
-GUI is consumed as a **local** Buildroot package:
+That runs `x6100-gui-dirclean` → `x6100-gui-rebuild` → `make`, copies  
+`images/sdcard.img` → `~/Projects/images/sdcardN.img`, bumps `next_sdcard_version.txt`.
 
-`br2_external/package/x6100-gui/x6100_gui.mk`
+Env overrides: `MAC6100_BUILDROOT`, `MAC6100_HUB`, `MAC6100_WIN_PROJECTS` (image output dir).
+
+### Flash
+
+Burn `sdcardN.img` with **balenaEtcher** on the Mac → microSD → X6100.
+
+---
+
+## Legacy: WSL on Windows
+
+Same `build.sh`; default image dir was `/mnt/c/Projects`. Prefer `build-local.sh` / `MAC6100_WIN_PROJECTS` now.
+
+### Environment
+
+- **Build host:** Linux (Ubuntu 24.04 VM or WSL)
+- Output: `~/Projects/AetherX6100Buildroot/build/images/sdcard.img`
+- **Do not** use `buildroot/output`
+
+### Source layout (Linux)
+
+| Path | Role |
+|------|------|
+| `~/Projects/x6100_test` | **Active** GUI (local Buildroot `SITE`) |
+| `~/Projects/AetherX6100Buildroot` | Buildroot + board packages |
+| `~/Projects/MAC6100` | Hub / docs / `build.sh` |
+
+`br2_external/package/x6100-gui/x6100_gui.mk` must use:
 
 ```make
-X6100_GUI_SITE = /home/macmuz/Projects/x6100_gui
+X6100_GUI_SITE = /home/<you>/Projects/x6100_test
 X6100_GUI_SITE_METHOD = local
 ```
 
-If that file still points at GitHub `git`, you are not on the MAC6100 local-dev setup.
+`setup-buildhost.sh` rewrites this for the current machine.  
+`~/Projects/x6100_gui` / `HE3r0/x6100_gui` is an **obsolete** archive — do not use for new work.
 
-## Full image build
-
-```bash
-cd ~/Projects/AetherX6100Buildroot/build
-make
-```
-
-Produces / refreshes `images/sdcard.img`.
-
-First-time / config setup for upstream Aether is documented in that repo’s `readme.md` (`br_config.sh`). Prefer verifying existing `build/` before re-running config scripts.
-
-## After changing GUI sources (important)
-
-Buildroot **caches** the GUI package tree. A plain `make` often **will not** pick up local GUI edits.
-
-Forced GUI rebuild (verified targets in this tree):
+### After GUI edits
 
 ```bash
 cd ~/Projects/AetherX6100Buildroot/build
@@ -72,46 +98,17 @@ make x6100-gui-rebuild
 make
 ```
 
+Or just `~/Projects/MAC6100/build-local.sh`.
+
 ### Sanity checks
 
 ```bash
-# Source of truth
-grep -n 'make_app_btn("FT8' ~/Projects/x6100_gui/src/buttons.cpp
-
-# What Buildroot actually compiled
-grep -n 'make_app_btn("FT8' \
-  ~/Projects/AetherX6100Buildroot/build/build/x6100-gui-v0.23.0-rc.3/src/buttons.cpp
-
-# Strings in installed binary
+grep -n 'make_app_btn("FT8' ~/Projects/x6100_test/src/buttons.cpp
 strings ~/Projects/AetherX6100Buildroot/build/target/usr/sbin/x6100_gui \
   | grep -E 'MAC6100|FT8|R1CBU'
 ```
 
-If source and `build/build/x6100-gui-...` disagree, the image is stale — re-run `dirclean` + `rebuild`.
+### What not to invent
 
-## Windows copy of `x6100_gui`
-
-`C:\Projects\x6100_gui` may exist but is **not** the build input. Always edit / verify under WSL `~/Projects/x6100_gui`.
-
-## Copy image to Windows (versioned)
-
-After a successful build, copy and bump the version counter:
-
-```bash
-# Read next number from hub (example: 7)
-VER=$(cat /mnt/c/Projects/Mac6100/next_sdcard_version.txt)
-cp -v ~/Projects/AetherX6100Buildroot/build/images/sdcard.img \
-      /mnt/c/Projects/sdcard${VER}.img
-echo $((VER + 1)) > /mnt/c/Projects/Mac6100/next_sdcard_version.txt
-```
-
-Convention on disk today: `sdcard.img`, `sdcard1.img` … `sdcard5.img` were earlier; MAC6100 automation starts numbering from **6**.
-
-## Flash
-
-Burn `sdcardN.img` with balenaEtcher / Rufus (or equivalent) to microSD, insert into X6100, boot.
-
-## What not to invent
-
-- Do not invent Buildroot package target names — list them from the existing `build` Makefile if unsure (`make -qp | grep '^x6100-gui'`).
-- Do not use `buildroot/output` as the image path for this project.
+- Do not invent Buildroot package target names — list from `make -qp | grep '^x6100-gui'`.
+- Do not use `buildroot/output` as the image path.

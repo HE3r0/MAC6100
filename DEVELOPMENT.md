@@ -4,36 +4,38 @@
 
 1. **One step at a time** — change → verify → next.
 2. **No guessing** — confirm paths, branches, and make targets before acting.
-3. Prefer WSL paths and commands for build/git that must match the radio image.
+3. **Build on Linux** (Ubuntu VM / WSL). Edit on Mac or Linux; flash from Mac with Etcher.
 4. Keep original author credit (R1CBU / upstream GUI) visible where appropriate (About).
 
 ## Where to work
 
 | Task | Location |
 |---|---|
-| UI / apps / dialogs | `~/Projects/x6100_gui/src/` |
+| UI / apps / dialogs | `~/Projects/x6100_test/src/` |
 | Boot logo, board, package `.mk` | `~/Projects/AetherX6100Buildroot/br2_external/` |
 | Build / flash image | `~/Projects/AetherX6100Buildroot/build/` |
-| Docs, assets, image counter | `C:\Projects\Mac6100\` |
+| Docs, assets, image counter | `~/Projects/MAC6100/` |
 
 ## Git
 
-Remotes use **SSH** (not HTTPS):
+HTTPS or SSH to `HE3r0/*`:
 
 ```text
-git@github.com:HE3r0/x6100_gui.git
-git@github.com:HE3r0/AetherX6100Buildroot.git
+https://github.com/HE3r0/x6100_test.git
+https://github.com/HE3r0/AetherX6100Buildroot.git
+https://github.com/HE3r0/MAC6100.git
 ```
 
 Typical branches (verify with `git status` / `git branch`):
 
-- GUI: `main`
-- Buildroot: `bootlogo` (MAC6100 packaging / logo / local GUI site)
+- GUI: `main` (baseline); `feature/bluetooth-ui` only if working that branch
+- Buildroot: `bootlogo` (tag `mac6100-baseline-1`)
+- Hub: `main`
 
 ### Commit / push (GUI example)
 
 ```bash
-cd ~/Projects/x6100_gui
+cd ~/Projects/x6100_test
 git status
 git diff
 git add <files>
@@ -41,7 +43,7 @@ git commit -m "Short why-focused message"
 git push origin main
 ```
 
-Note for Cursor agents: the IDE may inject a `Co-authored-by: Cursor` trailer that breaks PowerShell when `<` is present. Prefer committing from WSL bash, or invoke `git` via Python `subprocess` without that trailer if automation fails.
+Note for Cursor agents: the IDE may inject a `Co-authored-by: Cursor` trailer that breaks some shells when `<` is present. Prefer committing from bash, or invoke `git` via Python `subprocess` without that trailer if automation fails.
 
 ## Display / UI constraints
 
@@ -53,18 +55,17 @@ Note for Cursor agents: the IDE may inject a `Co-authored-by: Cursor` trailer th
 
 | Feature | File |
 |---|---|
-| About / info page | `x6100_gui/src/dialog_settings.cpp` → `make_info_page()` |
-| App button labels (e.g. FT8) | `x6100_gui/src/buttons.cpp` |
-| Startup message popup | was `msg_schedule_text_fmt(...)` in `main_screen.c` (removed in MAC6100) |
+| About / info page | `x6100_test/src/dialog_settings.cpp` → `make_info_page()` |
+| App button labels (e.g. FT8) | `x6100_test/src/buttons.cpp` |
 | Local GUI package | `AetherX6100Buildroot/br2_external/package/x6100-gui/x6100_gui.mk` |
 | Boot splash PNG | `AetherX6100Buildroot/br2_external/board/X6100/linux/logo.png` |
 
 ## Verify before claiming “done on radio”
 
-1. Edit WSL sources  
-2. `x6100-gui-dirclean` + `x6100-gui-rebuild` + `make`  
-3. Confirm string in `build/build/x6100-gui-...` **and** `strings .../usr/sbin/x6100_gui`  
-4. Copy `sdcardN.img` → flash → check on device  
+1. Edit `x6100_test` sources  
+2. `build-local.sh` (or `x6100-gui-dirclean` + `rebuild` + `make`)  
+3. Confirm strings in `build/target/usr/sbin/x6100_gui`  
+4. Flash `sdcardN.img` → check on device  
 
 ## Branding strings
 

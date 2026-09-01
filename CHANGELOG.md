@@ -4,7 +4,9 @@ All notable MAC6100-specific changes. Upstream history remains in the respective
 
 ## Unreleased
 
-- (none)
+### Tooling
+
+- macOS + Ubuntu build-host helpers: `setup-macos.sh`, `setup-buildhost.sh`; BUILDING/README updated for Mac VM workflow (`~/Projects/x6100_test` as active GUI)
 
 ## 2026-08-23
 

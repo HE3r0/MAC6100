@@ -9,3 +9,8 @@ Desktop.ini
 
 # Local-only notes (keep examples tracked)
 *.local.md
+
+# Machine-local build env (from setup-buildhost.sh)
+mac6100.local.env
+build-local.sh
+*.mk.bak

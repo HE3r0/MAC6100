@@ -12,18 +12,23 @@ This is a long-term open-source-style fork: own branding first, then ham-oriente
 
 | Repo | Role | GitHub (fork) |
 |---|---|---|
-| `x6100_gui` | LVGL UI / applications | https://github.com/HE3r0/x6100_gui |
+| `x6100_test` | **Active** LVGL UI | https://github.com/HE3r0/x6100_test |
 | `AetherX6100Buildroot` | Buildroot → `sdcard.img` | https://github.com/HE3r0/AetherX6100Buildroot |
+| `x6100_gui` | Obsolete archive | https://github.com/HE3r0/x6100_gui |
 
-**Canonical working copies live in WSL**, not under `C:\Projects\x6100_gui` (Windows copies may be stale).
+Canonical layout (Linux build host **or** Mac checkouts for editing):
 
+```text
+~/Projects/MAC6100
+~/Projects/x6100_test
+~/Projects/AetherX6100Buildroot
+~/Projects/images/          # versioned sdcardN.img output
 ```
-\\wsl.localhost\Ubuntu-24.04\home\macmuz\Projects\x6100_gui
-\\wsl.localhost\Ubuntu-24.04\home\macmuz\Projects\AetherX6100Buildroot
-```
 
-This folder (`C:\Projects\Mac6100`) is the **project hub**: docs, assets, image version counter.  
+This hub (`MAC6100`) holds docs, assets, and build helpers.  
 GitHub: https://github.com/HE3r0/MAC6100
+
+**Builds require Linux** (Ubuntu 24.04 VM on Mac, or WSL on Windows) — not native macOS. See [BUILDING.md](BUILDING.md).
 
 ## Documentation
 
@@ -36,7 +41,9 @@ GitHub: https://github.com/HE3r0/MAC6100
 | [ROADMAP.md](ROADMAP.md) | Planned work |
 | [AGENTS.md](AGENTS.md) | **Start here if you are an AI assistant** |
 | [docs/ai/quick-ref.md](docs/ai/quick-ref.md) | One-page AI quick reference |
-| [build.sh](build.sh) | One-shot rebuild + versioned `sdcardN.img` copy |
+| [setup-macos.sh](setup-macos.sh) | Mac host: verify clones |
+| [setup-buildhost.sh](setup-buildhost.sh) | Ubuntu: apt + SITE + `build-local.sh` |
+| [build.sh](build.sh) | One-shot GUI rebuild + versioned `sdcardN.img` |
 | [overrides/x6100_gui.mk.local.example](overrides/x6100_gui.mk.local.example) | Local vs git GUI `SITE` example |
 
 ## Current status
@@ -45,17 +52,17 @@ GitHub: https://github.com/HE3r0/MAC6100
 - Local GUI sources wired into Buildroot
 - About screen branded as MAC6100
 - Startup version banner disabled
-- Git push via SSH to `HE3r0/*`
+- Git push via SSH/HTTPS to `HE3r0/*`
 - Firmware builds and runs on the radio
 
 ## Flash artifacts
 
-Built image (WSL):
+Built image (Linux):
 
 `~/Projects/AetherX6100Buildroot/build/images/sdcard.img`
 
-Versioned copies on Windows:
+Versioned copies (after `build-local.sh`):
 
-`C:\Projects\sdcardN.img` (N = 1, 2, …)
+`~/Projects/images/sdcardN.img`
 
 Next free number is stored in [`next_sdcard_version.txt`](next_sdcard_version.txt).
