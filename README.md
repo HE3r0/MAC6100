@@ -41,7 +41,6 @@ GitHub: https://github.com/HE3r0/MAC6100
 | [ROADMAP.md](ROADMAP.md) | Planned work |
 | [AGENTS.md](AGENTS.md) | **Start here if you are an AI assistant** |
 | [docs/ai/quick-ref.md](docs/ai/quick-ref.md) | One-page AI quick reference |
-| [docs/BOOTLOGO.md](docs/BOOTLOGO.md) | SD-card boot logo override (`/mnt/Bootlogo`) |
 | [setup-macos.sh](setup-macos.sh) | Mac host: verify clones |
 | [setup-buildhost.sh](setup-buildhost.sh) | Ubuntu: apt + SITE + `build-local.sh` |
 | [build.sh](build.sh) | One-shot GUI rebuild + versioned `sdcardN.img` |
