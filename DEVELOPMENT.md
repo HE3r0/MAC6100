@@ -58,7 +58,8 @@ Note for Cursor agents: the IDE may inject a `Co-authored-by: Cursor` trailer th
 | About / info page | `x6100_test/src/dialog_settings.cpp` → `make_info_page()` |
 | App button labels (e.g. FT8) | `x6100_test/src/buttons.cpp` |
 | Local GUI package | `AetherX6100Buildroot/br2_external/package/x6100-gui/x6100_gui.mk` |
-| Boot splash PNG | `AetherX6100Buildroot/br2_external/board/X6100/linux/logo.png` |
+| Boot splash PNG (kernel default) | `AetherX6100Buildroot/br2_external/board/X6100/linux/logo.png` |
+| SD override splash | `/mnt/Bootlogo/logo.png` on DATA (see `docs/BOOTLOGO.md`) |
 
 ## Verify before claiming “done on radio”
 

@@ -7,6 +7,7 @@ All notable MAC6100-specific changes. Upstream history remains in the respective
 ### Tooling
 
 - macOS + Ubuntu build-host helpers: `setup-macos.sh`, `setup-buildhost.sh`; BUILDING/README updated for Mac VM workflow (`~/Projects/x6100_test` as active GUI)
+- **SD boot logo override**: `S90mac6100_bootsplash` shows `/mnt/Bootlogo/logo.png` if present, else built-in default (`docs/BOOTLOGO.md`)
 
 ## 2026-08-23
 
